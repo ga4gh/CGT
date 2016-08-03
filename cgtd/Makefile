@@ -1,48 +1,28 @@
+all:
+	docker-compose up
+
 stop:
-	docker stop cgtd || true && docker rm cgtd || true
-	docker stop ipfs || true && docker rm ipfs || true
+	docker-compose down
 
-clean:
-	rm -rf data/*
-	mkdir -p data/ipfs/export
-	mkdir -p data/ipfs/data
-	chmod -R 777 data
-
-ipfs:
-	docker run -d --name ipfs \
-		-v `pwd`/data/ipfs/export:/export \
-		-v `pwd`/data/ipfs/data:/data/ipfs \
-		-p 8080:8080 \
-		-p 4001:4001 \
-		-p 4002:4002/udp \
-		ipfs/go-ipfs:latest
+clean: stop
 
 reset:
 	# Reset steward to no submissions and no peers and then gc
-	docker exec ipfs sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
+	docker-compose exec ipfs sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
 
 build:
-	docker build -t cgtd .
+	docker-compose build
 
 debug:
-	docker stop cgtd || true && docker rm cgtd || true
-	docker run --name cgtd --rm -it \
-		-v `pwd`:/app:ro \
-		--link ipfs:ipfs \
-		-p 5000:5000 \
-		cgtd uwsgi --ini uwsgi.ini --python-autoreload=1 --processes=1 --threads=1
+	docker-compose logs
 
 test:
-	docker exec cgtd py.test -p no:cacheprovider -s -x
+	docker-compose exec cgtd py.test -p no:cacheprovider -s -x
 
 push:
 	docker tag cgtd:latest robcurrie/cgtd:latest
 	docker images | grep cgtd
 	docker push robcurrie/cgtd:latest
-
-run:
-	docker stop cgtd || true && docker rm cgtd || true
-	docker run -d --name cgtd --link ipfs:ipfs -p 5000:5000 robcurrie/cgtd:latest
 
 pull:
 	git pull
@@ -50,11 +30,10 @@ pull:
 	docker pull robcurrie/cgtd:latest
 
 shell:
-	docker exec -it cgtd /bin/sh
+	docker-compose exec cgtd /bin/sh
 
 update_pip_packages:
-	docker exec cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
+	docker-compose exec cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
 
 update_requirements:
-	docker exec cgtd pip freeze > requirements.txt
-
+	docker-compose exec cgtd pip freeze > requirements.txt

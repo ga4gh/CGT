@@ -1,0 +1,12 @@
+cgtd:
+  build: .
+  links:
+   - ipfs
+  ports:
+   - "5000:5000"
+ipfs:
+  image: ipfs/go-ipfs:latest 
+  ports:
+    - "8080:8080"
+    - "4001:4001"
+    - "4002:4002/udp"

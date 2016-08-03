@@ -29,24 +29,17 @@ operations.  The server is implemented using python and flask
 
 # Quickstart 
 
-    make stop build clean ipfs run
+    make
 
 # Build, Debug and Test Locally
 
-Note: All of the following use docker containers so that the only required
-dependency is make and docker.
-
-Start and initialize an ipfs database
-
-    make stop ipfs
+All of the following use docker containers so that the only required
+dependencies are make, docker (and docker-compose).
 
 Build a local cgtd docker container:
 
-    make build
-
-Start a cgtd container linked to the database container:
-
-    make debug
+    docker-compose build
+    docker-compose run
 
 Web interface: [http://localhost:5000/api]
 
