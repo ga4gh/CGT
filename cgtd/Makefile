@@ -3,10 +3,10 @@ stop:
 	docker stop ipfs || true && docker rm ipfs || true
 
 clean:
-	sudo rm -rf data/*
+	rm -rf data/*
 	mkdir -p data/ipfs/export
 	mkdir -p data/ipfs/data
-	sudo chmod -R 777 data
+	chmod -R 777 data
 
 ipfs:
 	docker run -d --name ipfs \
@@ -42,7 +42,7 @@ push:
 
 run:
 	docker stop cgtd || true && docker rm cgtd || true
-	docker run -d --name cgtd --link ipfs:ipfs -p 80:5000 robcurrie/cgtd:latest
+	docker run -d --name cgtd --link ipfs:ipfs -p 5000:5000 robcurrie/cgtd:latest
 
 pull:
 	git pull

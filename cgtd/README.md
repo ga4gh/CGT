@@ -27,9 +27,9 @@ storage and replication and ipns for address resolution and public/private key
 operations.  The server is implemented using python and flask
 (http://flask.pocoo.org/)
 
-# Running
+# Quickstart 
 
-    make stop clean ipfs init run
+    make stop build clean ipfs run
 
 # Build, Debug and Test Locally
 
@@ -38,7 +38,7 @@ dependency is make and docker.
 
 Start and initialize an ipfs database
 
-    make stop ipfs init
+    make stop ipfs
 
 Build a local cgtd docker container:
 
