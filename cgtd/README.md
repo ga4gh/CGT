@@ -30,8 +30,9 @@ operations.  The server is implemented using python and flask
 # Quickstart 
 
     make
+    make reset (for a clean ipfs state)
 
-# Build, Debug and Test Locally
+# Build and Test Locally
 
 All of the following use docker containers so that the only required
 dependencies are make, docker (and docker-compose).
@@ -39,18 +40,24 @@ dependencies are make, docker (and docker-compose).
 Build a local cgtd docker container:
 
     docker-compose build
-    docker-compose run
+    docker-compose up
 
 Web interface: [http://localhost:5000/api]
 
 Direct access to content via multihash:
 [http://localhost:5000/data/<multihash>]
 
-Note: make debug runs the cgtd daemon out of the current directory with
+# Debugging
+
+`make debug` runs the cgtd daemon out of the current directory with
 auto-reload so you can edit, test, and debug continuously.
+
+You can connect to the debug instance on **port 3000**:
+
+http://localhost:3000
 
 Run pytest inside of the running cgtd container:
 
     make test
 
-Note: Run in another terminal from the above make debug
+Note: Run in another terminal from the above make debug.
