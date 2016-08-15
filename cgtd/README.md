@@ -29,13 +29,16 @@ operations.  The server is implemented using python and flask
 
 # Quickstart 
 
-    make
-    make reset (for a clean ipfs state)
+    make stop clean ipfs reset run
 
 # Build and Test Locally
 
 All of the following use docker containers so that the only required
 dependencies are make, docker (and docker-compose).
+
+Start and initialize an ipfs database
+
+    make stop ipfs reset
 
 Build a local cgtd docker container:
 
