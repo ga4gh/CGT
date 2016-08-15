@@ -2,7 +2,6 @@ all: start
 
 start:
 	docker-compose up
-	open http://127.0.0.1:5000
 
 stop:
 	docker-compose down
@@ -18,13 +17,12 @@ build:
 
 debug:
 	docker stop cgtd || true && docker rm cgtd || true
-	docker run --name cgtd --rm -it \
+	docker run --env FLASK_DEBUG=1 --name cgtd --rm -it \
 		-v `pwd`:/app:ro \
 		--network cgtd_default \
 		--link cgtd_ipfs_1:ipfs \
 		-p 3000:3000 \
-		cgtd uwsgi --ini uwsgi-debug.ini --python-autoreload=1 --processes=1 --threads=1
-	open http://127.0.0.1:3000
+		cgtd uwsgi --ini uwsgi.ini --python-autoreload=1 --processes=1 --threads=1
 
 test:
 	docker-compose exec cgtd py.test -p no:cacheprovider -s -x

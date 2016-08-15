@@ -323,6 +323,11 @@ class SubmissionAPI(Resource):
             return {'message': "{} not in submissions".format(multihash)}
 
 if __name__ == "__main__":
+    #app.debug = True
+    if ( app.debug ):
+        from werkzeug.debug import DebuggedApplication
+        app.wsgi_app = DebuggedApplication( app.wsgi_app, True )
+
     # Work around bug in flask where templates don't auto-reload
     app.jinja_env.auto_reload = True
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", debug=True, use_debugger=True, use_reloader=True)
