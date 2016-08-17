@@ -11,9 +11,8 @@ RUN apk add --update linux-headers libc-dev build-base musl-dev python-dev
 RUN pip install uwsgi
 
 WORKDIR /app
-ADD ./requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
-
 ADD . /app
+RUN pip install -e .
 
-CMD uwsgi --ini uwsgi.ini
+ENV FLASK_DEBUG=1
+CMD scripts/cgtd

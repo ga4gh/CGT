@@ -11,6 +11,7 @@ from flask import Response, jsonify, render_template
 from flask_restplus import Api, Resource
 
 app = Flask(__name__, static_url_path="")
+app.debug = True
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -322,12 +323,15 @@ class SubmissionAPI(Resource):
             logging.warning("{} not in submissions".format(multihash))
             return {'message': "{} not in submissions".format(multihash)}
 
-if __name__ == "__main__":
-    #app.debug = True
-    if ( app.debug ):
-        from werkzeug.debug import DebuggedApplication
-        app.wsgi_app = DebuggedApplication( app.wsgi_app, True )
 
+
+if __name__ == "__main__":
     # Work around bug in flask where templates don't auto-reload
     app.jinja_env.auto_reload = True
-    app.run(host="0.0.0.0", debug=True, use_debugger=True, use_reloader=True)
+    from werkzeug.debug import DebuggedApplication
+    app.wsgi_app = DebuggedApplication( app.wsgi_app, True )
+    
+    import ipdb
+    ipdb.set_trace()
+    
+    app.run(host="0.0.0.0", debug=True, use_debugger=False, use_reloader=True)

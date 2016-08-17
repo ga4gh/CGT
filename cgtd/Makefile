@@ -15,15 +15,6 @@ reset:
 build:
 	docker-compose build
 
-debug:
-	docker stop cgtd || true && docker rm cgtd || true
-	docker run --env FLASK_DEBUG=1 --name cgtd --rm -it \
-		-v `pwd`:/app:ro \
-		--network cgtd_default \
-		--link cgtd_ipfs_1:ipfs \
-		-p 3000:3000 \
-		cgtd uwsgi --ini uwsgi.ini --python-autoreload=1 --processes=1 --threads=1
-
 test:
 	docker-compose exec cgtd py.test -p no:cacheprovider -s -x
 
