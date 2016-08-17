@@ -69,7 +69,8 @@ def resolve_steward(address=None):
     # If resolving self use local so we get latest, otherwise will
     # use cache for other servers
     multihash = g.ipfs.name_resolve(address if address else g.ipfs.id()["ID"],
-                                    opts={'local': address is None})["Path"].rsplit('/')[-1]
+                                    opts={'local': address is None})
+    multihash = multihash["Path"].rsplit('/')[-1]
     logging.debug("... to {}".format(multihash))
     return multihash
 
@@ -169,7 +170,8 @@ class PeersAPI(Resource):
         uwsgi.lock()  # make sure only one process does this at a time
         steward = get_steward()
         if address == g.ipfs.id()["ID"]:
-            logging.warning("Attempt to add this steward's address to peer list")
+            logging.warning(
+                "Attempt to add this steward's address to peer list")
         elif address in steward["peers"]:
             logging.info("{} already in peer list".format(address))
         else:
@@ -291,9 +293,11 @@ class SubmissionListAPI(Resource):
             steward["submissions"] = sorted(
                 steward["submissions"] + [manifest_multihash])
             update_steward(steward)
-            logging.debug("{} added to submissions list".format(manifest_multihash))
+            logging.debug(
+                "{} added to submissions list".format(manifest_multihash))
         else:
-            logging.debug("{} already in submissions list".format(manifest_multihash))
+            logging.debug(
+                "{} already in submissions list".format(manifest_multihash))
         uwsgi.unlock()
 
         return jsonify(multihash=manifest_multihash)
@@ -324,14 +328,13 @@ class SubmissionAPI(Resource):
             return {'message': "{} not in submissions".format(multihash)}
 
 
-
 if __name__ == "__main__":
     # Work around bug in flask where templates don't auto-reload
     app.jinja_env.auto_reload = True
     from werkzeug.debug import DebuggedApplication
-    app.wsgi_app = DebuggedApplication( app.wsgi_app, True )
-    
+    app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
+
     import ipdb
     ipdb.set_trace()
-    
+
     app.run(host="0.0.0.0", debug=True, use_debugger=False, use_reloader=True)

@@ -1,0 +1,10 @@
+language: python
+python:
+  - '2.7'
+install:
+  # the new pep8 == pycodestyle
+  - pip install pycodestyle
+  - pip install flake8
+script:
+  - pycodestyle .
+#  - flake8 .
