@@ -1,4 +1,8 @@
 language: python
+sudo: required
+services:
+  - docker
+
 branches:
   - master
   - no_init_bad_port
@@ -9,6 +13,9 @@ install:
   - pip install flake8
 script:
   - pycodestyle --max-line-length=150 .
+  - cd cgtd
+  - make
+  - make test
 notifications:
   email: false
   slack:
