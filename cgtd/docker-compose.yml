@@ -1,7 +1,7 @@
 version: '2'
 services:
   cgtd:
-    build: .
+    image: robcurrie/cgtd:latest
     links:
      - ipfs
     ports:
