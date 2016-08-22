@@ -45,7 +45,7 @@ class PyTest(TestCommand):
 setup(
     name='ctgd',
     version='0.1',
-    description='Decentralized distributed database of cancer variants and
+    description='Decentralized distributed database of cancer variants and \
     clinical data. http: // ga4gh.org /  # /cancergenetrust',
     author='Rob Currie',
     author_email='rcurrie@ucsc.edu',

@@ -10,13 +10,13 @@ clean: stop
 
 reset:
 	# Reset steward to no submissions and no peers and then gc
-	docker-compose run cgtd echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish
+	docker-compose exec ipfs sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
 
 build:
 	docker-compose build
 
 test:
-	docker-compose run cgtd py.test -p no:cacheprovider -s -x
+	docker-compose exec cgtd py.test -p no:cacheprovider -s -x
 
 push:
 	docker tag cgtd:latest robcurrie/cgtd:latest
@@ -29,10 +29,10 @@ pull:
 	docker pull robcurrie/cgtd:latest
 
 shell:
-	docker-compose run cgtd /bin/sh
+	docker-compose exec cgtd /bin/sh
 
 update_pip_packages:
-	docker-compose run cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
+	docker-compose exec cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
 
 update_requirements:
-	docker-compose run cgtd pip freeze > requirements.txt
+	docker-compose exec cgtd pip freeze > requirements.txt

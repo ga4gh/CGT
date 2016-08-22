@@ -331,10 +331,5 @@ class SubmissionAPI(Resource):
 if __name__ == "__main__":
     # Work around bug in flask where templates don't auto-reload
     app.jinja_env.auto_reload = True
-    from werkzeug.debug import DebuggedApplication
-    app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
-
-    import ipdb
-    ipdb.set_trace()
 
     app.run(host="0.0.0.0", debug=True, use_debugger=False, use_reloader=True)
