@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --update python py-pip make
+RUN apk add --update python py-pip
 RUN pip install --upgrade pip
 RUN apk add --update uwsgi-python
 
