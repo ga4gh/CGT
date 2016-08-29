@@ -14,5 +14,4 @@ WORKDIR /app
 ADD . /app
 RUN pip install -e .
 
-ENV FLASK_DEBUG=1
 CMD scripts/cgtd

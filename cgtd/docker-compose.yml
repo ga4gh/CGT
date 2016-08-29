@@ -6,6 +6,11 @@ services:
      - ipfs
     ports:
      - "5000:5000"
+    volumes: 
+      - .:/app
+      - ./data:/data
+    env_file:
+      - ./env
   ipfs:
     image: ipfs/go-ipfs:latest
     ports:
