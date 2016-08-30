@@ -24,6 +24,7 @@ ipfs:
 reset:
 	# Reset steward to no submissions and no peers and then gc
 	docker exec cgtd_ipfs_1 sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
+	echo $$?
 
 build:
 	docker-compose build
