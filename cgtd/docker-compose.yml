@@ -12,7 +12,10 @@ services:
     env_file:
       - ./env
   ipfs:
-    image: ipfs/go-ipfs:latest
+    image: ipfs/go-ipfs:release
+    volumes:
+      - ./data/export:/export
+      - ./data/ipfs:/data/ipfs
     ports:
       - "8080:8080"
       - "4001:4001"

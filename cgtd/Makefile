@@ -8,6 +8,19 @@ stop:
 
 clean: stop
 
+init:
+	docker-compose run ipfs ipfs daemon --init
+
+ipfs:
+# Start ipfs daemon (assumes database is already initialized)
+#	docker run -d --name ipfs \
+#		-v `pwd`/data/export:/export \
+#		-v `pwd`/data/ipfs:/data/ipfs \
+#		-p 8080:8080 \
+#		-p 4001:4001 \
+#		-p 4002:4002/udp \
+#		ipfs/go-ipfs:release
+
 reset:
 	# Reset steward to no submissions and no peers and then gc
 	docker exec cgtd_ipfs_1 sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"

@@ -29,7 +29,7 @@ operations.  The server is implemented using python and flask
 
 # Quickstart 
 
-    make stop clean ipfs reset run
+    make stop clean init ipfs reset run
 
 # Build and Test Locally
 
