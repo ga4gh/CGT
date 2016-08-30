@@ -16,6 +16,7 @@ script:
   - cd cgtd
   - make
   - make reset
+  - make init
   - make test
 notifications:
   email: false
