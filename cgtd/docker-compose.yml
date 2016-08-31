@@ -4,6 +4,8 @@ services:
     build: .
     links:
      - ipfs
+    depends_on:
+      - ipfs
     ports:
      - "5000:5000"
     volumes: 
