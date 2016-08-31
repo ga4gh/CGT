@@ -15,8 +15,7 @@ script:
   - pycodestyle --max-line-length=150 .
   - cd cgtd
   - make
-# @rcurrie experience with ipns/ipfs
-  - sleep 10
+  - docker ps -a
   - make reset
   - make init
   - make test
