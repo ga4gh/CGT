@@ -1,2 +1,2 @@
 #!/bin/sh
-uwsgi --ini uwsgi.ini --catch-exceptions --honour-stdin
+uwsgi --ini uwsgi.ini

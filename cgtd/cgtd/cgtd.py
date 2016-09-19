@@ -12,7 +12,6 @@ import flask_restplus
 from flask_restplus import Api, Resource, reqparse
 
 app = Flask(__name__, static_url_path="")
-app.debug = True
 logging.basicConfig(level=logging.DEBUG)
 
 
@@ -70,8 +69,7 @@ def resolve_steward(address=None):
     # If resolving self use local so we get latest, otherwise will
     # use cache for other servers
     multihash = g.ipfs.name_resolve(address if address else g.ipfs.id()["ID"],
-                                    opts={'local': address is None})
-    multihash = multihash["Path"].rsplit('/')[-1]
+                                    opts={'local': address is None})["Path"].rsplit('/')[-1]
     logging.debug("... to {}".format(multihash))
     return multihash
 
@@ -371,9 +369,7 @@ class SubmissionAPI(Resource):
         logging.info("{} removed from submissions".format(multihash))
         return {'message': "{} removed from submissions".format(multihash)}
 
-
 if __name__ == "__main__":
     # Work around bug in flask where templates don't auto-reload
     app.jinja_env.auto_reload = True
-
-    app.run(host="0.0.0.0", debug=True, use_debugger=False, use_reloader=True)
+    app.run(host="0.0.0.0", debug=True)
