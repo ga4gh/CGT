@@ -17,7 +17,6 @@ script:
   - make
   - docker ps -a
   - make reset
-  - make init
   - make test
 notifications:
   email: false
