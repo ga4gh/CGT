@@ -37,9 +37,9 @@ configuration and public/private key pair in data/config:
     make ipfs 
 
 Reset the steward's index to no submissions, no peers, and a domain of
-cgt.lorem.edu:
+lorem.edu:
 
-    make reset
+    DOMAIN=lorem.edu make reset
 
 Startup the cgtd container listening on port 80:
 
@@ -51,11 +51,11 @@ To verify both cgtd and ipfs are working you can query your steward's address:
 
 # Making Submissions
 
-To make a single submission:
+To make a test submission:
 
     make submit
 
-or explicitly:
+or via curl:
 
     docker exec -it cgtd curl -X POST localhost:5000/v0/submissions \
         -F "a_field_name=a_field_value" \

@@ -1,5 +1,11 @@
 IPFS_VERSION := v0.4.3-rc4
 
+ifdef DOMAIN
+	domain=$$DOMAIN
+else
+	domain="lorem.edu"
+endif
+
 all: start
 
 start:
@@ -23,9 +29,8 @@ ipfs:
 		ipfs/go-ipfs:$(IPFS_VERSION) --migrate=true
 
 reset:
-	# Reset steward to no submissions and no peers and then gc
-	docker exec cgtd_ipfs_1 sh -c "echo '{\"domain\": \"cgt.lorem.edu\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
-	echo $$?
+	echo "Resetting steard to no submissions, no peers, and domain = $(domain)"
+	docker exec ipfs sh -c "echo '{\"domain\": \"$(domain)\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
 
 build:
 	docker-compose build
@@ -50,7 +55,6 @@ push:
 
 run:
 	# Run the latest version from docker hub
-	docker stop cgtd || true && docker rm cgtd || true
 	docker run -d --name cgtd --link ipfs:ipfs -p 80:5000 robcurrie/cgtd:latest
 
 pull:
