@@ -3,6 +3,9 @@ sudo: required
 services:
   - docker
 
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.0
+
 branches:
   - master
   - no_init_bad_port
