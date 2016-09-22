@@ -17,6 +17,7 @@ install:
 script:
   - pycodestyle --max-line-length=150 .
   - cd cgtd
+  - make ipfs
   - make
   - docker-compose --version
   - docker ps -a
