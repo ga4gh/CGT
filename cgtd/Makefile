@@ -30,7 +30,7 @@ ipfs:
 
 reset:
 	echo "Resetting steard to no submissions, no peers, and domain = $(domain)"
-	docker exec ipfs sh -c "echo '{\"domain\": \"$(domain)\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
+	docker-compose exec ipfs sh -c "echo '{\"domain\": \"$(domain)\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
 
 build:
 	docker-compose build
