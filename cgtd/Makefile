@@ -53,10 +53,6 @@ push:
 	docker images | grep cgtd
 	docker push robcurrie/cgtd:latest
 
-run:
-	# Run the latest version from docker hub
-	docker run -d --name cgtd --link ipfs:ipfs -p 80:5000 robcurrie/cgtd:latest
-
 pull:
 	git pull
 	docker pull ipfs/go-ipfs:$(IPFS_VERSION)
@@ -74,9 +70,3 @@ submit:
 
 shell:
 	docker-compose run cgtd /bin/sh
-
-update_pip_packages:
-	docker-compose run cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
-
-update_requirements:
-	docker exec cgtd pip freeze > requirements.txt
