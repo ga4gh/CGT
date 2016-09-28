@@ -4,6 +4,7 @@ import uuid
 import ipfsapi
 
 CGT_UCSC_ADDRESS = "QmaWcGneeMEx6unN8iJCVCxP7Qcv4T91pjuZj9drJrdih1"
+STEWARD_ADDRESS = "stewards/QmaWcGneeMEx6unN8iJCVCxP7Qcv4T91pjuZj9drJXXXXX"
 
 
 ipfs = ipfsapi.Client("ipfs", 5001)
@@ -37,7 +38,7 @@ def test_steward(server):
     us = r.json()["address"]
     r = requests.get(url_for(server, "stewards/{}".format(us)))
     assert(r.status_code == requests.codes.ok)
-    r = requests.get(url_for(server, "stewards/QmaWcGneeMEx6unN8iJCVCxP7Qcv4T91pjuZj9drJXXXXX"))
+    r = requests.get(url_for(server, STEWARD_ADDRESS))
     assert(r.status_code != requests.codes.ok)
 
 

@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.getcwd(), '..'))
 
 def pytest_addoption(parser):
     parser.addoption("--server", action="store",
-                     dest='server', default='http://127.0.0.1:5000',
+                     dest='server', default='http://127.0.0.1',
                      help="Test server url")
 
 

@@ -1,0 +1,23 @@
+version: '2'
+services:
+  cgtd:
+    build: .
+    links:
+     - ipfs
+    depends_on:
+      - ipfs
+    volumes: 
+      - .:/app
+      - ./data:/data
+    ports:
+      - "80:5000"
+    env_file:
+      - ./env
+  ipfs:
+    image: ipfs/go-ipfs
+    volumes:
+      - ./data/export:/export
+      - ./data/ipfs:/data/ipfs
+    expose:
+      - "8080"
+      - "4001"

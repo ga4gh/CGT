@@ -6,29 +6,26 @@ else
 	domain="lorem.edu"
 endif
 
+all: start
+
+start:
+	mkdir -p data/ipfs && chmod -R 777 data
+	docker-compose up -d
+
 stop:
-	docker stop cgtd || true && docker rm cgtd || true
-	docker stop ipfs || true && docker rm ipfs || true
+	docker-compose down
+
+clean: stop
 
 clean:
 	sudo rm -rf data/*
 
-ipfs:
-	# Start ipfs daemon (assumes database is already initialized)
-	mkdir -p data
-	docker run -d --name ipfs \
-		-v `pwd`/data:/data/ipfs \
-		-p 8080:8080 \
-		-p 4001:4001 \
-		ipfs/go-ipfs:$(IPFS_VERSION) --migrate=true
-
 reset:
-	# Reset steward to no submissions and no peers and then gc
-	echo "Resetting steward to no submissions, no peers, and domain = $(domain)"
-	docker exec ipfs sh -c "echo '{\"domain\": \"$(domain)\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
+	echo "Resetting steard to no submissions, no peers, and domain = $(domain)"
+	docker-compose exec ipfs sh -c "echo '{\"domain\": \"$(domain)\", \"submissions\": [], \"peers\": []}' | ipfs add -q | xargs ipfs name publish"
 
 build:
-	docker build -t cgtd .
+	docker-compose build
 
 debug:
 	# Run cgtd out of the current directory with reloading after code change
@@ -40,17 +37,13 @@ debug:
 		cgtd uwsgi --ini uwsgi.ini --python-autoreload=1 --processes=1 --threads=1
 
 test:
-	docker exec cgtd py.test -p no:cacheprovider -s -x
+	docker-compose run cgtd py.test -p no:cacheprovider -s -x
 
 push:
 	# Update docker hub (requires authentication)
 	docker tag cgtd:latest robcurrie/cgtd:latest
 	docker images | grep cgtd
 	docker push robcurrie/cgtd:latest
-
-run:
-	# Run the latest version from docker hub
-	docker run -d --name cgtd --link ipfs:ipfs -p 80:5000 robcurrie/cgtd:latest
 
 pull:
 	git pull
@@ -68,10 +61,4 @@ submit:
         -F files[]=@tests/ALL/ALL-US__TARGET-10-PAKMVD-09A-01D.vcf
 
 shell:
-	docker exec -it cgtd /bin/sh
-
-update_pip_packages:
-	docker exec cgtd "pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U"
-
-update_requirements:
-	docker exec cgtd pip freeze > requirements.txt
+	docker-compose run cgtd /bin/sh
