@@ -1,4 +1,4 @@
-IPFS_VERSION := v0.4.3-rc4
+IPFS_VERSION := v0.4.3
 
 ifdef DOMAIN
 	domain=$$DOMAIN
@@ -18,15 +18,6 @@ clean: stop
 
 clean:
 	sudo rm -rf data/*
-
-ipfs:
-	# Start ipfs daemon (assumes database is already initialized)
-	mkdir -p data
-	docker run -d --name ipfs \
-		-v `pwd`/data:/data/ipfs \
-		-p 8080:8080 \
-		-p 4001:4001 \
-		ipfs/go-ipfs:$(IPFS_VERSION) --migrate=true
 
 reset:
 	echo "Resetting steard to no submissions, no peers, and domain = $(domain)"

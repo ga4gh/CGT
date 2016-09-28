@@ -6,19 +6,18 @@ services:
      - ipfs
     depends_on:
       - ipfs
-    ports:
-     - "5000:5000"
     volumes: 
       - .:/app
       - ./data:/data
+    ports:
+      - "80:5000"
     env_file:
       - ./env
   ipfs:
-    image: ipfs/go-ipfs:release
+    image: ipfs/go-ipfs
     volumes:
       - ./data/export:/export
       - ./data/ipfs:/data/ipfs
-    ports:
-      - "8080:8080"
-      - "4001:4001"
-      - "4002:4002/udp"
+    expose:
+      - "8080"
+      - "4001"

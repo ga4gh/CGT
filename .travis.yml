@@ -17,11 +17,10 @@ install:
 script:
   - pycodestyle --max-line-length=150 .
   - cd cgtd
-  - make reset
-  - make
   - docker-compose --version
   - docker ps -a
-  - make test
+  - make
+  - make reset
 notifications:
   email: false
   slack:
