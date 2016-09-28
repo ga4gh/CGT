@@ -9,6 +9,7 @@ endif
 all: start
 
 start:
+	mkdir -p data/ipfs && chmod -R 777 data
 	docker-compose up -d
 
 stop:
