@@ -14,14 +14,22 @@ clean:
 	sudo rm -rf data/*
 
 ipfs:
-	# Start ipfs daemon (assumes database is already initialized)
-	mkdir -p data
-	docker run -d --name ipfs \
-		-v `pwd`/data:/data/ipfs \
-		-p 8080:8080 \
-		-p 4001:4001 \
-		ipfs/go-ipfs:$(IPFS_VERSION) --migrate=true
-
+	# Initializing local IPFS daemon and data directory (if not present already)..."
+	if [ -d "data" ]; then \
+        docker run -d --name ipfs \
+            -v `pwd`/data:/data/ipfs \
+            -p 8080:8080 \
+            -p 4001:4001 \
+            ipfs/go-ipfs:v0.4.3 --migrate=true; \
+    else \
+        mkdir -p data/ipfs && chmod -R 777 data && \
+        docker run -d --name ipfs \
+            -v `pwd`/data:/data/ipfs \
+            -p 8080:8080 \
+            -p 4001:4001 \
+            ipfs/go-ipfs:v0.4.3 --init; \
+  fi
+	
 reset:
 	# Reset steward to no submissions and no peers and then gc
 	echo "Resetting steward to no submissions, no peers, and domain = $(domain)"
