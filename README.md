@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ga4gh/cgtd.svg?branch=master)](https://travis-ci.org/ga4gh/cgtd)
+
 # Cancer Gene Trust Daemon
 
 Stores steward submissions in a distributed, replicated and decentralized
@@ -93,3 +95,4 @@ you can make changes and it will live reload.
 To run tests open another terminal window and:
 
     make test
+>>>>>>> 352d586bf8ddbf5abba1602ff358b75a56f66892
