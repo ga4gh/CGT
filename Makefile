@@ -29,7 +29,7 @@ ipfs:
             -p 4001:4001 \
             ipfs/go-ipfs:v0.4.3 --init; \
   fi
-	
+
 reset:
 	# Reset steward to no submissions and no peers and then gc
 	echo "Resetting steward to no submissions, no peers, and domain = $(domain)"
